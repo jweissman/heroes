@@ -59,7 +59,7 @@ module Nicknames where
       | j == Warrior = ["brave", "bold", "fearless"]
       | j == Soldier = ["tough"]
       | j == Bard = ["mellifluous", "melodious"]
-      | j == Thief = ["devious", "sneaky", "pickpocker"]
+      | j == Thief = ["devious", "sneaky", "pickpocket"]
       | j `elem` [Cleric, Monk, Priest] = ["faithful", "pious"]
       | j == Ranger = ["explorer", "wild", "tamer"]
       | j `elem` [Sorceror, Archmage, Oracle] = ["obscure", "mysterious"]
