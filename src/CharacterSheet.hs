@@ -49,28 +49,18 @@ module CharacterSheet where
       where description = characterDescription character
 
 
+    
 
     -- generate skeletal character sheet
     genCharacterSheet :: IO CharacterSheet
     genCharacterSheet = do
-      --rolledValues        <- (6 `d` 20)
-      stats               <- genStats
-      racialModifier      <- randomIO :: IO RacialModifier
-      sp                  <- randomIO :: IO Species
-      morality            <- randomIO :: IO MoralAlignment
-      ethics              <- randomIO :: IO EthicalAlignment
-      
-      professionalSubtype <- randomIO :: IO ProfessionalSubtype
-      prof                <- randomIO :: IO Profession
-      
-      langs               <- replicateM 2 (randomIO :: IO Language)                                                               
-      sks                 <- replicateM 8 (randomIO :: IO Skill) 
-
-      return (let r = Race { modifier = racialModifier, species = sp }
-                  st = stats
-                  a  = aligned ethics morality
-                  j  = Job { profession = prof, subtype = professionalSubtype }
-                  l  = nub (CommonSpeech:langs)
+      st                  <- genStats
+      r                   <- genRace
+      a                   <- genAlignment
+      j                   <- genJob
+      sks                 <- genSkills 8
+      langs               <- genLangs 2
+      return (let l  = nub (CommonSpeech:langs)
                   sk = nub sks
                   in CharacterSheet { race = r, alignment = a, job = j, stats = st, languages = l, skills = sk })
 

@@ -6,6 +6,7 @@ module Hero where
                      , sheet :: CharacterSheet }
       deriving (Eq, Show, Read)
 
+
     -- generate random named hero
     genHero :: IO Hero
     genHero = do

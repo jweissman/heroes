@@ -57,7 +57,7 @@ module Nicknames where
       | j == Aristocrat = ["illustrious", "king", "queen", "prince", "haughty", "glorious", "eminent"]
       | j == Commoner = ["modest", "humble", "poor"]
       | j == Warrior = ["brave", "bold", "fearless"]
-      | j == Soldier = ["tough"]
+      | j == Soldier = ["tough", "disciplined"]
       | j == Bard = ["mellifluous", "melodious"]
       | j == Thief = ["devious", "sneaky", "pickpocker"]
       | j `elem` [Cleric, Monk, Priest] = ["faithful", "pious"]
@@ -67,10 +67,16 @@ module Nicknames where
 
     nicknameGuessesFromSkills :: [Skill] -> [String]
     nicknameGuessesFromSkills sks
-      | Leatherworking `elem` sks = ["leatherman", "leathermaster"]
-      | Blacksmithing `elem` sks  = ["mastersmith"]
-      | Armory `elem` sks         = ["armorer"]
       | Will `elem` sks           = ["strong-willed", "fortitudinous"]
+      | Athletics `elem` sks      = ["champion", "olympian"]
+      | Acrobatics `elem` sks     = ["nimble", "poised"]
+      | Gymnastics `elem` sks     = ["flexible"]
+      | Brawling `elem` sks       = ["rambunctious", "rowdy"]
+      | Swimming `elem` sks       = ["fish"]
+      | Shooting `elem` sks       = ["marksman"]
+      | Ride `elem` sks           = ["rider"]
+      | Focus `elem` sks          = ["focused"]
+      | Armory `elem` sks         = ["armorer"]
       | Patience `elem` sks       = ["cautious", "patient"]
       | otherwise = []
 
