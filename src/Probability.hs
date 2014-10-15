@@ -12,6 +12,7 @@ module Probability where
     rollDice n faces = replicateM n (rollDie faces)
 
     -- some sweet 'tax..
+    d :: Int -> Integer -> IO [Integer]
     d = rollDice
 
     --select random elems from bounded enums like r <- randomIO :: Klass
@@ -22,7 +23,8 @@ module Probability where
          where
            (rnd, nextGen) = next gen
            r = fromEnum f + (rnd `mod` length [f..t])
-       
+
+    randomIndex :: [a] -> IO Int
     randomIndex l = getStdRandom (randomR (0, length l - 1))
 
     pickFrom :: [a] -> IO a

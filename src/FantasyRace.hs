@@ -1,6 +1,6 @@
 module FantasyRace where
     import System.Random
-    import Probability
+    import Probability()
     
     data RacialModifier = Dark | Deep | Brutal | Weird | High | Sea | Sky | Star | Cold | Fire | Construct | Insectile | Chaos | Corrupted | Augmented | Titanic | Crystal | Elder | Exiled | Mountain | Swamp | Ice | Dream | Desert | Magma | Urban | Arctic | Dusk | Savage | Barbarian | Neo | Arena | Mystic
       deriving (Eq, Show, Read, Enum, Bounded)
@@ -15,6 +15,7 @@ module FantasyRace where
     humanizedRace :: Race -> String
     humanizedRace race = show (modifier race) ++ " " ++ show (species race)
 
+    genRace :: IO Race
     genRace = do
       racialModifier      <- randomIO :: IO RacialModifier
       sp                  <- randomIO :: IO Species

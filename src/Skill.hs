@@ -13,6 +13,9 @@ module Skill where
     humanizedSkills :: [Skill] -> String
     humanizedSkills sks = intercalate ", " (map show sks)
 
-    
+    --guessSkillsFromJob job
+    --  | job == Thief = [ Sneaking, Surveillance, Stealing ]
+    --  | job == Archer = [ Shooting ]
+    --  | otherwise = []
 
     genSkills n = replicateM 8 (randomIO :: IO Skill)

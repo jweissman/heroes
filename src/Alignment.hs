@@ -1,7 +1,7 @@
 module Alignment where  
     import StringHelpers
     import System.Random
-    import Probability
+    import Probability()
     
     data MoralAlignment = Good | MoralNeutral | Evil
       deriving (Eq, Show, Read, Enum, Bounded)
@@ -15,6 +15,7 @@ module Alignment where
     aligned :: EthicalAlignment -> MoralAlignment -> Alignment
     aligned e m = Alignment { ethical = e, moral = m }
 
+    genAlignment :: IO Alignment
     genAlignment = do
       morality            <- randomIO :: IO MoralAlignment
       ethics              <- randomIO :: IO EthicalAlignment

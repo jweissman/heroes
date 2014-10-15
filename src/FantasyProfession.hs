@@ -2,6 +2,8 @@ module FantasyProfession where
     import System.Random
     import Probability
 
+    --data ProfessionalClass = Economic | Military | Criminal
+
     data Profession = Aristocrat | Commoner | Warrior | Soldier | Archer | Bard | Trader | Pilgrim | Thief | Apothecary | Hunter | Cleric | Ranger | Monk | Sorceror | Paladin | Healer | Rogue | Merchant | Seeker | Archmage | Oracle | Priest | Wizard | Knight | Shadowmage | Commander | Diplomat | Ninja | Prophet | Pirate | Swashbuckler | Samurai | Warlord | Sage | Gambler | Scout | Assassin | WitchDoctor | Templar | Sniper | Trapper | Dancer | Dervish | Alchemist | Trickster | Inquisitor | Missionary | Trackerss
         deriving (Eq, Show, Read, Enum, Bounded)
 

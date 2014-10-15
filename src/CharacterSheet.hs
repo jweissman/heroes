@@ -1,13 +1,12 @@
 module CharacterSheet where
-    import Control.Monad
     import Data.List
-    import System.Random
     import FantasyRace
     import FantasyProfession
     import FantasyStats
     import FantasyLanguage
     import Skill
     import Alignment
+    import StringHelpers
 
     data CharacterSheet = CharacterSheet { race :: Race
                                          , job :: Job
@@ -16,19 +15,21 @@ module CharacterSheet where
                                          , languages :: [Language]
                                          , skills :: [Skill] }
       deriving (Eq, Show, Read)
-  
-    describeSkillsAndLanguages skills langs = 
+
+    describeSkillsAndLanguages :: [Skill] -> [Language] -> String
+    describeSkillsAndLanguages sks langs = 
       "\n  Skills" ++
       "\n  ------" ++ 
       "\n" ++
       "\n    * speaks " ++ l ++
-      "\n    * skilled in " ++ sk where sk = humanizedSkills skills
+      "\n    * skilled in " ++ sk where sk = humanizedSkills sks
                                         l = humanizedLanguages langs
 
-    describeStatistics stats =
+    describeStatistics :: Stats -> String
+    describeStatistics sts =
       "\n  Statistics" ++
       "\n  ----------" ++ 
-      "\n" ++ humanizedStats stats
+      "\n" ++ humanizedStats sts
 
     characterDescription :: CharacterSheet -> String
     characterDescription character = 
@@ -42,14 +43,10 @@ module CharacterSheet where
             sl = describeSkillsAndLanguages (skills character) (languages character)
             st = describeStatistics (stats character)
 
-    hr = "=====================================================================\n"
-
+    
     displayCharacterSheet :: CharacterSheet -> String
     displayCharacterSheet character = hr ++ description ++ "\n\n"
       where description = characterDescription character
-
-
-    
 
     -- generate skeletal character sheet
     genCharacterSheet :: IO CharacterSheet

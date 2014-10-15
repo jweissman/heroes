@@ -17,8 +17,9 @@ module FantasyStats where
                                                      , intelligence = int
                                                      , wisdom = wis
                                                      , dexterity = dex }
+    
 
-
+    genStats :: IO Stats
     genStats = do
         rolledValues <- 6 `d` 20
         return (buildStats rolledValues)
@@ -32,6 +33,7 @@ module FantasyStats where
       | stat <= 18 = "great"
       | stat <= 19 = "epic"
       | stat >  19 = "deity"
+      | otherwise  = "unknown"
 
     terrible stat = judgeStat stat == "terrible"
     poor     stat = judgeStat stat == "poor"
