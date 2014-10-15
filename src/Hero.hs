@@ -7,6 +7,7 @@ module Hero where
       deriving (Eq, Show, Read)
 
     -- generate random named hero
+    genHero :: IO Hero
     genHero = do
       characterSheet <- genCharacterSheet
       characterName <- genName characterSheet

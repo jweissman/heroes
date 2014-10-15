@@ -8,7 +8,8 @@ module FantasyStats where
                        , wisdom :: Integer
                        , dexterity :: Integer } 
       deriving (Eq, Show, Read)
-                   
+
+    buildStats :: [Integer] -> Stats              
     buildStats (str:con:cha:int:wis:dex:xs) =  Stats { strength = str
                                                      , constitution = con
                                                      , charisma = cha
@@ -18,6 +19,8 @@ module FantasyStats where
 
                                                 
     --data StatQuality = Terrible | Poor | Average | ... ?
+
+    judgeStat :: Integer -> String
     judgeStat stat
       | stat <= 5  = "terrible"
       | stat <= 8  = "poor"
@@ -36,14 +39,24 @@ module FantasyStats where
     deity    stat = judgeStat stat == "deity"
 
 
+    humanizeStat :: String -> Integer -> String
     humanizeStat name stat = "\n    " ++ capWord name ++ ": " ++ show stat ++ " (" ++ judgeStat stat ++ ")" 
 
-    humanizedStats stats = humanizeStat "constitution" con  ++    
-                           humanizeStat "charisma" cha      ++    
-                           humanizeStat "wisdom" wis        ++    
-                           humanizeStat "intelligence" int  ++    
-                           humanizeStat "dexterity" dex     ++    
-                           humanizeStat "strength" str
+    humanizeCon = humanizeStat "constitution"
+    humanizeCha = humanizeStat "charisma"
+    humanizeWis = humanizeStat "wisdom"
+    humanizeDex = humanizeStat "dexterity"
+    humanizeStr = humanizeStat "strength"
+    humanizeInt = humanizeStat "intelligence"
+
+
+    humanizedStats :: Stats -> String
+    humanizedStats stats  = humanizeCon con ++    
+                            humanizeCha cha ++    
+                            humanizeWis wis ++    
+                            humanizeInt int ++    
+                            humanizeDex dex ++    
+                            humanizeStr str
       where str = strength stats
             con = constitution stats
             cha = charisma stats

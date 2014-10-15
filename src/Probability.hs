@@ -1,5 +1,6 @@
 {-# LANGUAGE FlexibleInstances, UndecidableInstances, ScopedTypeVariables, OverlappingInstances #-}
 module Probability where
+    import Control.Monad
     import System.Random
     --
     -- probabilities
@@ -8,14 +9,14 @@ module Probability where
     rollDie faces = getStdRandom (randomR (1,faces)) 
 
     rollDice :: Int -> Integer -> IO [Integer]
-    rollDice n faces = sequence $ replicate n (rollDie faces)
+    rollDice n faces = replicateM n (rollDie faces)
 
     -- some sweet 'tax..
     d = rollDice
 
     --select random elems from bounded enums like r <- randomIO :: Klass
     instance (Bounded a, Enum a) => Random a where
-       random gen = randomR (minBound :: a, maxBound :: a) gen
+       random = randomR (minBound :: a, maxBound :: a)
        randomR (f, t) gen =
          (toEnum r :: a, nextGen)
          where

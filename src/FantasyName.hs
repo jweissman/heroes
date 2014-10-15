@@ -11,7 +11,7 @@ module FantasyName where
     genName sheet = do
       forename <- genBasicName
       surname  <- genBasicName
-      nickname <- (pickFrom (nicknameGuesses sheet))
+      nickname <- pickFrom (nicknameGuesses sheet)
       return (let fullName = f ++ " " ++ s ++ " the " ++ n
                   --p = capWord namePrefix
                   f = capWord forename

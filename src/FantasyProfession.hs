@@ -9,4 +9,5 @@ module FantasyProfession where
     data Job = Job { profession :: Profession, subtype :: ProfessionalSubtype }
       deriving (Eq, Show, Read)
 
+    humanizedJob :: Job -> String
     humanizedJob job = show (subtype job) ++ " " ++ show (profession job)
