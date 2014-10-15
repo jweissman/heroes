@@ -4,7 +4,7 @@ module FantasyLanguage where
     import System.Random
     import Probability
 
-    data Language = CommonSpeech | ElvishSpeech | DwarvenSpeech | InfernalLanguage | CelestialLanguage | ReptilianSpeech | InsectSpeech | SacredLanguage | DeadLanguage | FaeSpeech | SilentLanguage | BlackSpeech | AvianSpeech | AstralSpeech | SecretLanguage | AncientSpeech | AlienSpeech | OutsiderSpeech | TrueSpeech
+    data Language = CommonSpeech | ElvishSpeech | DwarvenSpeech | HalflingSpeech | OrcishSpeech | InfernalLanguage | CelestialLanguage | ReptilianSpeech | InsectSpeech | SacredLanguage | DeadLanguage | FaeSpeech | SilentLanguage | BlackSpeech | AvianSpeech | AstralSpeech | SecretLanguage | AncientSpeech | AlienSpeech | OutsiderSpeech | TrueSpeech
       deriving (Eq, Show, Read, Enum, Bounded)
 
     humanizedLanguages :: [Language] -> String

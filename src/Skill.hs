@@ -13,4 +13,6 @@ module Skill where
     humanizedSkills :: [Skill] -> String
     humanizedSkills sks = intercalate ", " (map show sks)
 
+    
+
     genSkills n = replicateM 8 (randomIO :: IO Skill)
