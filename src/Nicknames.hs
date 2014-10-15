@@ -38,8 +38,8 @@ module Nicknames where
 
     nicknameGuessesFromDexterity :: Integer -> [String]
     nicknameGuessesFromDexterity dex
-      | poor dex  = ["slow"]
-      | great dex = ["quick","fleet", "swift"]
+      | poor dex  = ["slow", "plodding"]
+      | great dex = ["quick","fleet", "swift","rapid"]
       | otherwise = []
 
     nicknameGuessesFromStats :: Stats -> [String]
@@ -55,7 +55,14 @@ module Nicknames where
     nicknameGuessesFromJob :: Profession -> [String]
     nicknameGuessesFromJob j
       | j == Aristocrat = ["illustrious", "king", "queen", "prince", "haughty", "glorious", "eminent"]
-      | j == Cleric = ["faithful"]
+      | j == Commoner = ["modest", "humble", "poor"]
+      | j == Warrior = ["brave", "bold", "fearless"]
+      | j == Soldier = ["tough"]
+      | j == Bard = ["mellifluous", "melodious"]
+      | j == Thief = ["devious", "sneaky", "pickpocker"]
+      | j `elem` [Cleric, Monk, Priest] = ["faithful", "pious"]
+      | j == Ranger = ["explorer", "wild", "tamer"]
+      | j `elem` [Sorceror, Archmage, Oracle] = ["obscure", "mysterious"]
       | otherwise = []
 
     nicknameGuessesFromSkills :: [Skill] -> [String]

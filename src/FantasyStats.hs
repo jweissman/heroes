@@ -1,5 +1,6 @@
 module FantasyStats where
     import StringHelpers
+    import Probability
     
     data Stats = Stats { strength     :: Integer
                        , constitution :: Integer
@@ -16,6 +17,11 @@ module FantasyStats where
                                                      , intelligence = int
                                                      , wisdom = wis
                                                      , dexterity = dex }
+
+
+    genStats = do
+        rolledValues <- 6 `d` 20
+        return (buildStats rolledValues)
 
     judgeStat :: Integer -> String
     judgeStat stat

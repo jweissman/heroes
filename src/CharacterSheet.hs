@@ -2,7 +2,6 @@ module CharacterSheet where
     import Control.Monad
     import Data.List
     import System.Random
-    import Probability
     import FantasyRace
     import FantasyProfession
     import FantasyStats
@@ -21,9 +20,10 @@ module CharacterSheet where
     describeSkillsAndLanguages skills langs = 
       "\n  Skills" ++
       "\n  ------" ++ 
+      "\n" ++
       "\n    * speaks " ++ l ++
       "\n    * skilled in " ++ sk where sk = humanizedSkills skills
-					l = humanizedLanguages langs
+                                        l = humanizedLanguages langs
 
     describeStatistics stats =
       "\n  Statistics" ++
@@ -35,12 +35,12 @@ module CharacterSheet where
       "\n       Race: " ++ r ++ 
       "\n        Job: " ++ j ++ 
       "\n  Alignment: " ++ a ++ 
-      "\n\n" ++ st ++ "\n" ++ sl
+      "\n\n" ++ st ++ "\n\n" ++ sl
       where a  = humanizedAlignment (alignment character)
             r  = humanizedRace (race character)
             j  = humanizedJob (job character)
-	    sl = describeSkillsAndLanguages (skills character) (languages character)
-	    st = describeStatistics (stats character)
+            sl = describeSkillsAndLanguages (skills character) (languages character)
+            st = describeStatistics (stats character)
 
     hr = "=====================================================================\n"
 
@@ -49,11 +49,12 @@ module CharacterSheet where
       where description = characterDescription character
 
 
+
     -- generate skeletal character sheet
     genCharacterSheet :: IO CharacterSheet
     genCharacterSheet = do
-      rolledValues        <- 6 `d` 20
-      
+      --rolledValues        <- (6 `d` 20)
+      stats               <- genStats
       racialModifier      <- randomIO :: IO RacialModifier
       sp                  <- randomIO :: IO Species
       morality            <- randomIO :: IO MoralAlignment
@@ -61,12 +62,12 @@ module CharacterSheet where
       
       professionalSubtype <- randomIO :: IO ProfessionalSubtype
       prof                <- randomIO :: IO Profession
-
+      
       langs               <- replicateM 2 (randomIO :: IO Language)                                                               
       sks                 <- replicateM 8 (randomIO :: IO Skill) 
 
       return (let r = Race { modifier = racialModifier, species = sp }
-                  st = buildStats rolledValues
+                  st = stats
                   a  = aligned ethics morality
                   j  = Job { profession = prof, subtype = professionalSubtype }
                   l  = nub (CommonSpeech:langs)

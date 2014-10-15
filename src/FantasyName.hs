@@ -11,11 +11,7 @@ module FantasyName where
     -- really should be part of a structure right?
     genName :: CharacterSheet -> IO String
     genName sheet = do
-      forename <- genBasicName
-      surname  <- genBasicName
-      nickname <- pickFrom (nicknameGuesses sheet)
-      return (let fullName = f ++ " " ++ s ++ " the " ++ n
-                  f = capWord forename
-                  s = capWord surname
-                  n = capWord nickname
-               in fullName)
+      f <- genBasicName
+      s <- genBasicName
+      n <- pickFrom (nicknameGuesses sheet)
+      return (capWord f ++ " " ++ capWord s ++ " the " ++ capWord n)
