@@ -1,12 +1,12 @@
 module FantasyStats where
     import StringHelpers
     
-    data Stats = Stats { strength :: Integer
+    data Stats = Stats { strength     :: Integer
                        , constitution :: Integer
-                       , charisma :: Integer
+                       , charisma     :: Integer
                        , intelligence :: Integer
-                       , wisdom :: Integer
-                       , dexterity :: Integer } 
+                       , wisdom       :: Integer
+                       , dexterity    :: Integer } 
       deriving (Eq, Show, Read)
 
     buildStats :: [Integer] -> Stats              
@@ -16,9 +16,6 @@ module FantasyStats where
                                                      , intelligence = int
                                                      , wisdom = wis
                                                      , dexterity = dex }
-
-                                                
-    --data StatQuality = Terrible | Poor | Average | ... ?
 
     judgeStat :: Integer -> String
     judgeStat stat
@@ -51,11 +48,11 @@ module FantasyStats where
 
 
     humanizedStats :: Stats -> String
-    humanizedStats stats  = humanizeCon con ++    
-                            humanizeCha cha ++    
-                            humanizeWis wis ++    
-                            humanizeInt int ++    
-                            humanizeDex dex ++    
+    humanizedStats stats  = humanizeCon con ++
+                            humanizeCha cha ++
+                            humanizeWis wis ++
+                            humanizeInt int ++
+                            humanizeDex dex ++
                             humanizeStr str
       where str = strength stats
             con = constitution stats

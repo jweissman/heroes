@@ -6,6 +6,8 @@ module FantasyName where
     
     import CharacterSheet
 
+    data FantasyName = FantasyName { forename :: String, surname :: String, nickname :: String } --, particles :: [String] }
+
     -- really should be part of a structure right?
     genName :: CharacterSheet -> IO String
     genName sheet = do
@@ -13,7 +15,6 @@ module FantasyName where
       surname  <- genBasicName
       nickname <- pickFrom (nicknameGuesses sheet)
       return (let fullName = f ++ " " ++ s ++ " the " ++ n
-                  --p = capWord namePrefix
                   f = capWord forename
                   s = capWord surname
                   n = capWord nickname

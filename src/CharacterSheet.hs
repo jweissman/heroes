@@ -17,29 +17,30 @@ module CharacterSheet where
                                          , languages :: [Language]
                                          , skills :: [Skill] }
       deriving (Eq, Show, Read)
-
-    characterDescription :: CharacterSheet -> String
-    characterDescription character = 
-      "\n  Race: " ++ r ++ 
-      "\n  Job: " ++ j ++ 
-      "\n  Alignment: " ++ a ++ 
-      "\n" ++
+  
+    describeSkillsAndLanguages skills langs = 
       "\n  Skills" ++
       "\n  ------" ++ 
       "\n    * speaks " ++ l ++
-      "\n    * skilled in " ++ sk ++
-      "\n" ++
+      "\n    * skilled in " ++ sk where sk = humanizedSkills skills
+					l = humanizedLanguages langs
+
+    describeStatistics stats =
       "\n  Statistics" ++
       "\n  ----------" ++ 
-      "\n" ++
-      st
+      "\n" ++ humanizedStats stats
 
+    characterDescription :: CharacterSheet -> String
+    characterDescription character = 
+      "\n       Race: " ++ r ++ 
+      "\n        Job: " ++ j ++ 
+      "\n  Alignment: " ++ a ++ 
+      "\n\n" ++ st ++ "\n" ++ sl
       where a  = humanizedAlignment (alignment character)
             r  = humanizedRace (race character)
             j  = humanizedJob (job character)
-            st = humanizedStats (stats character)
-            l  = humanizedLanguages (languages character)
-            sk = humanizedSkills (skills character)
+	    sl = describeSkillsAndLanguages (skills character) (languages character)
+	    st = describeStatistics (stats character)
 
     hr = "=====================================================================\n"
 
