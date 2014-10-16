@@ -18,4 +18,4 @@ module Skill where
     --  | job == Archer = [ Shooting ]
     --  | otherwise = []
 
-    genSkills n = replicateM 8 (randomIO :: IO Skill)
+    genSkills n = replicateM n (randomIO :: IO Skill)

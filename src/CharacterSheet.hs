@@ -12,11 +12,11 @@ module CharacterSheet where
                                          , job :: Job
                                          , alignment :: Alignment
                                          , stats :: Stats
-                                         , languages :: [Language]
+                                         , languages :: [LanguageType]
                                          , skills :: [Skill] }
       deriving (Eq, Show, Read)
 
-    describeSkillsAndLanguages :: [Skill] -> [Language] -> String
+    describeSkillsAndLanguages :: [Skill] -> [LanguageType] -> String
     describeSkillsAndLanguages sks langs = 
       "\n  Skills" ++
       "\n  ------" ++ 
@@ -44,9 +44,6 @@ module CharacterSheet where
             st = describeStatistics (stats character)
 
     
-    displayCharacterSheet :: CharacterSheet -> String
-    displayCharacterSheet character = hr ++ description ++ "\n\n"
-      where description = characterDescription character
 
     -- generate skeletal character sheet
     genCharacterSheet :: IO CharacterSheet
@@ -55,8 +52,8 @@ module CharacterSheet where
       r                   <- genRace
       a                   <- genAlignment
       j                   <- genJob
-      sks                 <- genSkills 8
-      langs               <- genLangs 2
+      sks                 <- genSkills 5
+      langs               <- genLangs 3 --(intelligence st)
       return (let l  = nub (CommonSpeech:langs)
                   sk = nub sks
                   in CharacterSheet { race = r, alignment = a, job = j, stats = st, languages = l, skills = sk })

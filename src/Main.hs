@@ -5,5 +5,5 @@ import Hero
 main :: IO ()
 main = forever $ do
     hero <- genHero
-    putStrLn $ name hero
-    putStrLn $ displayCharacterSheet (sheet hero)
+    putStrLn $ displayHero hero
+    getLine

@@ -4,10 +4,16 @@ module FantasyLanguage where
     import System.Random
     import Probability()
 
-    data Language = CommonSpeech | ElvishSpeech | DwarvenSpeech | HalflingSpeech | OrcishSpeech | InfernalLanguage | CelestialLanguage | ReptilianSpeech | InsectSpeech | SacredLanguage | DeadLanguage | FaeSpeech | SilentLanguage | BlackSpeech | AvianSpeech | AstralSpeech | SecretLanguage | AncientSpeech | AlienSpeech | OutsiderSpeech | TrueSpeech
+    data LanguageType = CommonSpeech | ElvishSpeech | DwarvenSpeech | HalflingSpeech | OrcishSpeech | InfernalLanguage | CelestialLanguage | ReptilianSpeech | InsectSpeech | SacredLanguage | DeadLanguage | FaeSpeech | SilentLanguage | BlackSpeech | AvianSpeech | AstralSpeech | SecretLanguage | AncientSpeech | AlienSpeech | OutsiderSpeech | TrueSpeech
       deriving (Eq, Show, Read, Enum, Bounded)
 
-    humanizedLanguages :: [Language] -> String
+    data Language = LanguageType [(String,String)]
+      deriving (Eq, Show, Read)
+
+    -- compose a mock language translating our adjectives and nouns (so we can translate/"encrypt" placenames etc)
+    -- genLanguage
+
+    humanizedLanguages :: [LanguageType] -> String
     humanizedLanguages langs = intercalate ", " (map show langs)
 
-    genLangs n = replicateM 2 (randomIO :: IO Language)
+    genLangs n = replicateM n (randomIO :: IO LanguageType)

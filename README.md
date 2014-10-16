@@ -1,9 +1,9 @@
-haskell
-=======
+heroes
+======
 
-learning haskell. fantasy game character sheet generator.
+learning haskell, so building this "heromaker" -- a simple fantasy game character sheet generator based loosely on fate and srd.
 
-output is like:
+output is currently like:
 
 *Bittersmith Coolpen the Vigorous*
 
