@@ -1,4 +1,5 @@
 module CharacterSheet where
+    import Control.Monad
     import Data.List
     import FantasyRace
     import FantasyProfession
@@ -11,9 +12,9 @@ module CharacterSheet where
     data CharacterSheet = CharacterSheet { race :: Race
                                          , job :: Job
                                          , alignment :: Alignment
-                                         , stats :: Stats
+                                         , stats :: [Statistic]
                                          , languages :: [LanguageType]
-                                         , skills :: [Skill] }
+                                         , characterSkills :: [Skill] }
       deriving (Eq, Show, Read)
 
     describeSkillsAndLanguages :: [Skill] -> [LanguageType] -> String
@@ -22,25 +23,18 @@ module CharacterSheet where
       "\n  ------" ++ 
       "\n" ++
       "\n    * speaks " ++ l ++
-      "\n    * skilled in " ++ sk where sk = humanizedSkills sks
-                                        l = humanizedLanguages langs
+      "\n    * " ++ sk where sk = humanizedSkills sks
+                             l = humanizedLanguages langs
 
-    describeStatistics :: Stats -> String
+    describeStatistics :: [Statistic] -> String
     describeStatistics sts =
       "\n  Statistics" ++
       "\n  ----------" ++ 
       "\n" ++ humanizedStats sts
 
     characterDescription :: CharacterSheet -> String
-    characterDescription character = 
-      "\n       Race: " ++ r ++ 
-      "\n        Job: " ++ j ++ 
-      "\n  Alignment: " ++ a ++ 
-      "\n\n" ++ st ++ "\n\n" ++ sl
-      where a  = humanizedAlignment (alignment character)
-            r  = humanizedRace (race character)
-            j  = humanizedJob (job character)
-            sl = describeSkillsAndLanguages (skills character) (languages character)
+    characterDescription character = st ++ "\n\n" ++ sl
+      where sl = describeSkillsAndLanguages (characterSkills character) (languages character)
             st = describeStatistics (stats character)
 
     
@@ -48,13 +42,13 @@ module CharacterSheet where
     -- generate skeletal character sheet
     genCharacterSheet :: IO CharacterSheet
     genCharacterSheet = do
-      st                  <- genStats
       r                   <- genRace
       a                   <- genAlignment
       j                   <- genJob
-      sks                 <- genSkills 5
+      --sks                 <- genSkills 5
       langs               <- genLangs 3 --(intelligence st)
+      sks 		  <- replicateM 5 genSkill
+      sts 		  <- genStats
       return (let l  = nub (CommonSpeech:langs)
-                  sk = nub sks
-                  in CharacterSheet { race = r, alignment = a, job = j, stats = st, languages = l, skills = sk })
+                  in CharacterSheet { race = r, alignment = a, job = j, stats = sts, languages = l, characterSkills = sks }) -- nub (genSkills 5) })
 

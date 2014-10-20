@@ -1,70 +1,67 @@
 module FantasyStats where
+    import Data.Maybe
+    import Data.List
+    import System.Random
     import StringHelpers
     import Probability
-    
-    data Stats = Stats { strength     :: Integer
-                       , constitution :: Integer
-                       , charisma     :: Integer
-                       , intelligence :: Integer
-                       , wisdom       :: Integer
-                       , dexterity    :: Integer } 
+    import Quality
+
+    data StatisticType = Strength | Constitution | Charisma | Intelligence | Wisdom | Dexterity | 
+			 Perception | Patience |
+		         Spirit | Pride | Energy | Will | Focus | Logic
+      deriving (Eq, Show, Read, Bounded, Enum)
+
+    allStats = [ Strength .. ]
+
+    data Statistic = Statistic StatisticType Integer
       deriving (Eq, Show, Read)
 
-    buildStats :: [Integer] -> Stats              
-    buildStats (str:con:cha:int:wis:dex:xs) =  Stats { strength = str
-                                                     , constitution = con
-                                                     , charisma = cha
-                                                     , intelligence = int
-                                                     , wisdom = wis
-                                                     , dexterity = dex }
+    rollStat statType = do
+      statValue <- 1 `d` 20
+      return (Statistic statType (head statValue))
+
+    genStat = do
+      statType <- randomIO :: IO StatisticType
+      return (rollStat statType)
+
+    genStats = mapM rollStat allStats
+
+
+
+    getStat ofType stats = fromMaybe (Statistic Strength 0) tryStat
+      where tryStat = find statMatches stats where statMatches (Statistic t _) = t == ofType 
+
+
+    getStatValue (Statistic _ val) = val
+
+    -- mimic record accessors...
+    strength     ss = getStatValue (getStat Strength ss)
+    constitution ss = getStatValue (getStat Constitution ss)
+    charisma 	 ss = getStatValue (getStat Charisma ss)
+    intelligence ss = getStatValue (getStat Intelligence ss)
+    wisdom 	 ss = getStatValue (getStat Wisdom ss)
+    dexterity    ss = getStatValue (getStat Dexterity ss)
+
+    perception   ss = getStatValue (getStat Perception ss)
+    patience     ss = getStatValue (getStat Patience ss)
+
+    spirit       ss = getStatValue (getStat Spirit ss)
+    pride        ss = getStatValue (getStat Pride ss)
+    energy       ss = getStatValue (getStat Energy ss)
+    will         ss = getStatValue (getStat Will ss)
+    focus        ss = getStatValue (getStat Focus ss)
+    logic        ss = getStatValue (getStat Logic ss)
+
+
+    --data StatisticRestriction = StatisticRestriction StatisticType Quality
+    --  deriving (Eq, Show, Read)
+
+
+    judgeStat (Statistic _ val) = judge val
     
+    humanizeStat :: Statistic -> String
+    humanizeStat (Statistic t v) = "\n    " ++ capWord (show t) ++ ": " ++ show v ++ " (" ++ (show (judge v)) ++ ")" 
 
-    genStats :: IO Stats
-    genStats = do
-        rolledValues <- 6 `d` 20
-        return (buildStats rolledValues)
-
-    judgeStat :: Integer -> String
-    judgeStat stat
-      | stat <= 5  = "terrible"
-      | stat <= 8  = "poor"
-      | stat <= 12 = "average"
-      | stat <= 15 = "good"
-      | stat <= 18 = "great"
-      | stat <= 19 = "epic"
-      | stat >  19 = "deity"
-      | otherwise  = "unknown"
-
-    terrible stat = judgeStat stat == "terrible"
-    poor     stat = judgeStat stat == "poor"
-    average  stat = judgeStat stat == "average" || good stat
-    good     stat = judgeStat stat == "good" || great stat
-    great    stat = judgeStat stat == "great" || epic stat
-    epic     stat = judgeStat stat == "epic" || deity stat
-    deity    stat = judgeStat stat == "deity"
-
-
-    humanizeStat :: String -> Integer -> String
-    humanizeStat name stat = "\n    " ++ capWord name ++ ": " ++ show stat ++ " (" ++ judgeStat stat ++ ")" 
-
-    humanizeCon = humanizeStat "constitution"
-    humanizeCha = humanizeStat "charisma"
-    humanizeWis = humanizeStat "wisdom"
-    humanizeDex = humanizeStat "dexterity"
-    humanizeStr = humanizeStat "strength"
-    humanizeInt = humanizeStat "intelligence"
-
-
-    humanizedStats :: Stats -> String
-    humanizedStats stats  = humanizeCon con ++
-                            humanizeCha cha ++
-                            humanizeWis wis ++
-                            humanizeInt int ++
-                            humanizeDex dex ++
-                            humanizeStr str
-      where str = strength stats
-            con = constitution stats
-            cha = charisma stats
-            wis = wisdom stats
-            int = intelligence stats
-            dex = dexterity stats
+    humanizedStats :: [Statistic] -> String
+    humanizedStats stats  = concat (map humanizeStat stats)
+    

@@ -1,4 +1,9 @@
 module Hero where
+    import Nicknames
+    import Data.Char
+    import System.Random
+    import City
+    import Probability
     import CharacterSheet
     import BasicNames
     import FantasyName
@@ -7,42 +12,33 @@ module Hero where
     import Alignment
     import StringHelpers
     
-    data Hero = Hero { heroName :: String
+    data Hero = Hero { forename :: String
+		     , surname :: String
+		     , nickname :: String
                      , sheet :: CharacterSheet
-		     , hometown :: String }
+		     , hometown :: City }
       deriving (Eq, Show, Read)
-
-
-    --data CityScale = Hamlet | Village | Town | MajorCity | Metropolis
-    --data City = City { cityName :: String, scale :: CityScale, species :: FantasyRace, descriptor :: String }
-
-    --genCity = do
-    --  n        <- genBasicName
-    --  citySpecies <- randomIO :: FantasyRace
-    --  cityScale   <- randomIO :: CityScale
-    --  cityAdj     <- pickFrom adjectives
-    --  return City { cityName = n, scale = cityScale, species = citySpecies, descriptor = cityAdj }
-
-    --describeCity city = "the " ++ descriptor city ++ " " ++ scale city ++ " of " ++ cityName city
 
     -- generate random named hero
     genHero :: IO Hero
     genHero = do
       characterSheet <- genCharacterSheet
-      characterName <- genName characterSheet
-      city <- genBasicName
+      --characterName <- genName characterSheet
+      f <- genBasicName
+      s <- genBasicName
+      n <- pickFrom (nicknameGuesses characterSheet)
+      city <- genCity
+      return Hero { forename = f, surname = s, nickname = n, sheet = characterSheet, hometown = city }
 
-      return Hero { heroName = characterName, sheet = characterSheet, hometown = capWord city }
+    heroName (Hero {forename = f, surname = s, nickname = n}) = (capWord f ++ " " ++ capWord s ++ " the " ++ capWord n)
 
-    characterSynopsis hero = let s = humanizedRace (race (sheet hero))
-			         j = humanizedJob (job (sheet hero))
-			         a = humanizedAlignment (alignment (sheet hero))
-                             in s ++ " " ++ j ++ " " ++ a 
-
-    characterBio hero = "The " ++ characterSynopsis hero ++ " from " ++ hometown hero ++ "." --city --cityDescription where cityDescription = describeCity (city hero)
+    characterBio hero =  "\n\n   " ++ capWord (forename hero) ++ " the " ++ humanizedRace (race (sheet hero)) ++ " and " ++ a ++ " works as " ++  j ++ " and is from " ++ cityDescription 
+      where cityDescription = describeCity (hometown hero)
+            a = map toLower $ humanizedAlignment (alignment (sheet hero))
+	    j = map toLower $ humanizedJob (job (sheet hero))
       
     displayHero :: Hero -> String
-    displayHero hero = hr ++ "\n  " ++ n ++ "\n\n        " ++ bio ++ "\n\n" ++ description ++ "\n\n"
+    displayHero hero = hr ++ "\n  " ++ n ++ bio ++ "\n\n" ++ description ++ "\n\n"
       where bio = characterBio hero
 	    description = characterDescription (sheet hero)
 	    n = heroName hero

@@ -3,7 +3,7 @@ module Alignment where
     import System.Random
     import Probability()
     
-    data MoralAlignment = Good | MoralNeutral | Evil
+    data MoralAlignment = MoralGood | MoralNeutral | Evil
       deriving (Eq, Show, Read, Enum, Bounded)
 
     data EthicalAlignment = Lawful | EthicalNeutral | Chaotic
@@ -22,9 +22,9 @@ module Alignment where
       return (aligned ethics morality)
 
     describeAlignment :: EthicalAlignment -> MoralAlignment -> String
-    describeAlignment Lawful  Good                    = "crusader"
-    describeAlignment EthicalNeutral Good             = "benefactor"
-    describeAlignment Chaotic Good                    = "rebel"
+    describeAlignment Lawful  MoralGood                    = "crusader"
+    describeAlignment EthicalNeutral MoralGood             = "benefactor"
+    describeAlignment Chaotic MoralGood                    = "rebel"
     describeAlignment Lawful MoralNeutral             = "judge"
     describeAlignment EthicalNeutral MoralNeutral     = "undecided"
     describeAlignment Chaotic MoralNeutral            = "free spirit"
@@ -35,3 +35,10 @@ module Alignment where
     humanizedAlignment :: Alignment -> String
     humanizedAlignment alignment = d
       where d = capWord (describeAlignment (ethical alignment) (moral alignment))
+
+    --data MoralRestriction = MoralRestriction MoralAlignment
+    --data EthicalRestriction = EthicalRestriction EthicalAlignment
+    --data AlignmentRestriction = MoralRestriction MoralAlignment | EthicalRestriction EthicalAlignment
+
+
+

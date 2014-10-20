@@ -5,6 +5,7 @@ module Nicknames where
 --    import FantasyRace
     import Alignment
     import Skill
+    import Quality
 
     nicknameGuessesFromStrength :: Integer -> [String]
     nicknameGuessesFromStrength str
@@ -42,7 +43,7 @@ module Nicknames where
       | great dex = ["quick","fleet", "swift","rapid"]
       | otherwise = []
 
-    nicknameGuessesFromStats :: Stats -> [String]
+    nicknameGuessesFromStats :: [Statistic] -> [String]
     nicknameGuessesFromStats sts = concat statGuessElements
       where fromStrength      = nicknameGuessesFromStrength     (strength sts)
             fromCha           = nicknameGuessesFromCharisma     (charisma sts)
@@ -53,36 +54,36 @@ module Nicknames where
             statGuessElements = [fromStrength, fromCha, fromWis, fromInt, fromCon, fromDex]
 
     nicknameGuessesFromJob :: Profession -> [String]
-    nicknameGuessesFromJob j
-      | j == Aristocrat = ["illustrious", "king", "queen", "prince", "haughty", "glorious", "eminent"]
-      | j == Commoner = ["modest", "humble", "poor"]
-      | j == Warrior = ["brave", "bold", "fearless"]
-      | j == Soldier = ["tough", "disciplined"]
-      | j == Bard = ["mellifluous", "melodious"]
-      | j == Thief = ["devious", "sneaky", "pickpocket"]
-      | j `elem` [Cleric, Monk, Priest] = ["faithful", "pious"]
-      | j == Ranger = ["explorer", "wild", "tamer"]
-      | j `elem` [Sorceror, Archmage, Oracle] = ["obscure", "mysterious"]
-      | otherwise = []
+    nicknameGuessesFromJob j = []
+    --  | j == Aristocrat = ["illustrious", "king", "queen", "prince", "haughty", "glorious", "eminent"]
+    --  | j == Commoner = ["modest", "humble", "poor"]
+    --  | j == Warrior = ["brave", "bold", "fearless"]
+    --  | j == Soldier = ["tough", "disciplined"]
+    --  | j == Bard = ["mellifluous", "melodious"]
+    --  | j == Thief = ["devious", "sneaky", "pickpocket"]
+    --  | j `elem` [Cleric, Monk, Priest] = ["faithful", "pious"]
+    --  | j == Ranger = ["explorer", "wild", "tamer"]
+    --  | j `elem` [Sorceror, Archmage, Oracle] = ["obscure", "mysterious"]
+    --  | otherwise = []
 
     nicknameGuessesFromSkills :: [Skill] -> [String]
-    nicknameGuessesFromSkills sks
-      | Will `elem` sks           = ["strong-willed", "fortitudinous"]
-      | Athletics `elem` sks      = ["champion", "olympian"]
-      | Acrobatics `elem` sks     = ["nimble", "poised"]
-      | Gymnastics `elem` sks     = ["flexible"]
-      | Brawling `elem` sks       = ["rambunctious", "rowdy"]
-      | Swimming `elem` sks       = ["fish"]
-      | Shooting `elem` sks       = ["marksman"]
-      | Ride `elem` sks           = ["rider"]
-      | Focus `elem` sks          = ["focused"]
-      | Armory `elem` sks         = ["armorer"]
-      | Patience `elem` sks       = ["cautious", "patient"]
-      | otherwise = []
+    nicknameGuessesFromSkills sks = []
+    --  | Will `elem` sks           = ["strong-willed", "fortitudinous"]
+    --  | Athletics `elem` sks      = ["champion", "olympian"]
+    --  | Acrobatics `elem` sks     = ["nimble", "poised"]
+    --  | Gymnastics `elem` sks     = ["flexible"]
+    --  | Brawling `elem` sks       = ["rambunctious", "rowdy"]
+    --  | Swimming `elem` sks       = ["fish"]
+    --  | Shooting `elem` sks       = ["marksman"]
+    --  | Ride `elem` sks           = ["rider"]
+    --  | Focus `elem` sks          = ["focused"]
+    --  | Armory `elem` sks         = ["armorer"]
+    --  | Patience `elem` sks       = ["cautious", "patient"]
+    --  | otherwise = []
 
     nicknameGuessesFromMoralAlignment :: MoralAlignment -> [String]
     nicknameGuessesFromMoralAlignment morality
-      | morality == Good    = ["kind", "sweet", "good", "valorous", "noble"]
+      | morality == MoralGood    = ["kind", "sweet", "good", "valorous", "noble"]
       | morality == MoralNeutral = ["even-handed", "impartial", "neutral"] 
       | morality == Evil    = ["wicked", "devious", "cruel", "evil", "terrible"]
       | otherwise           = []

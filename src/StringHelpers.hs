@@ -9,5 +9,8 @@ module StringHelpers where
     capWords [] = []
     capWords (h:t) = capWord h : map capWord t
 
+    ---startsWithVowel?
+
+
     hr :: String
     hr = "=====================================================================\n"

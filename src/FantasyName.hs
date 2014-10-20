@@ -6,7 +6,7 @@ module FantasyName where
     
     import CharacterSheet
 
-    data FantasyName = FantasyName { forename :: String, surname :: String, nickname :: String } --, particles :: [String] }
+    --data FantasyName = FantasyName { forename :: String, surname :: String, nickname :: String } --, particles :: [String] }
 
     -- really should be part of a structure right?
     genName :: CharacterSheet -> IO String

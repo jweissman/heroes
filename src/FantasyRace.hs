@@ -1,4 +1,6 @@
 module FantasyRace where
+    import Data.Char
+    import StringHelpers
     import System.Random
     import Probability()
     
@@ -13,7 +15,7 @@ module FantasyRace where
       deriving (Eq, Show, Read)
 
     humanizedRace :: Race -> String
-    humanizedRace race = show (modifier race) ++ " " ++ show (species race)
+    humanizedRace race = toLower (show (modifier race) ++ " " ++ show (species race))
 
     genRace :: IO Race
     genRace = do

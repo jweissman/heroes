@@ -1,0 +1,11 @@
+--module Element where
+--    import Quality
+--
+--    data QualitativeElementType  = StatisticType | SkillType | ProfessionType
+--    data QualitativeElementValue = QualitativeElementValue QualitativeElementType Integer
+--
+--    judge (QualitativeElementValue _ val) = judgeQuality val
+--
+--    data QualitativeElement = Statistic | Skill | Profession -- | Ethnicity
+
+    --gen element
